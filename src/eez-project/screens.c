@@ -20,6 +20,7 @@ void create_screen_main() {
             lv_obj_set_pos(obj, 0, 0);
             lv_obj_set_size(obj, 128, 160);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
                 {
@@ -49,9 +50,9 @@ void create_screen_main() {
                 }
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    lv_obj_set_pos(obj, -11, 71);
+                    lv_obj_set_pos(obj, -13, 71);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "Platform:RP2040");
+                    lv_label_set_text(obj, "Platform: RP2040");
                     lv_obj_set_style_text_color(obj, lv_color_hex(0xffec1010), LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
@@ -63,9 +64,9 @@ void create_screen_main() {
                 }
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    lv_obj_set_pos(obj, 13, 86);
+                    lv_obj_set_pos(obj, 12, 87);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "LVGL:8.3.0");
+                    lv_label_set_text(obj, "LVGL: 8.3.0");
                     lv_obj_set_style_text_color(obj, lv_color_hex(0xffec1010), LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
             }

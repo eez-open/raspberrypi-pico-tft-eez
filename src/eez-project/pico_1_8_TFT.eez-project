@@ -246,9 +246,9 @@
             {
               "objID": "7fc91782-e486-4d73-c111-3f31a62290fe",
               "type": "LVGLLabelWidget",
-              "left": -11,
+              "left": -13,
               "top": 71,
-              "width": 121,
+              "width": 125,
               "height": 16,
               "customInputs": [],
               "customOutputs": [],
@@ -281,7 +281,7 @@
                 }
               },
               "eventHandlers": [],
-              "text": "Platform:RP2040",
+              "text": "Platform: RP2040",
               "textType": "literal",
               "longMode": "WRAP",
               "recolor": false
@@ -332,9 +332,9 @@
             {
               "objID": "ecdb5619-c67f-4af6-c8df-0ec7a09d7c16",
               "type": "LVGLLabelWidget",
-              "left": 13,
-              "top": 86,
-              "width": 73,
+              "left": 12,
+              "top": 87,
+              "width": 77,
               "height": 16,
               "customInputs": [],
               "customOutputs": [],
@@ -367,7 +367,7 @@
                 }
               },
               "eventHandlers": [],
-              "text": "LVGL:8.3.0",
+              "text": "LVGL: 8.3.0",
               "textType": "literal",
               "longMode": "WRAP",
               "recolor": false
@@ -383,7 +383,14 @@
           "disabledStateType": "literal",
           "states": "",
           "localStyles": {
-            "objID": "e275d387-3a61-4a91-b88f-2164b8bf2515"
+            "objID": "e275d387-3a61-4a91-b88f-2164b8bf2515",
+            "definition": {
+              "MAIN": {
+                "DEFAULT": {
+                  "radius": 0
+                }
+              }
+            }
           },
           "eventHandlers": []
         },
