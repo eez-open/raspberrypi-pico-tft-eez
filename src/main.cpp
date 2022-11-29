@@ -1,12 +1,12 @@
 #include <lvgl.h>
 #include <TFT_eSPI.h>
-#include <lv_demo.h>
+#include "eez-project/ui.h"
 
 TFT_eSPI tft = TFT_eSPI(); /* TFT instance */
 
 /*Change to your screen resolution*/
-static const uint32_t screenWidth  = 480;
-static const uint32_t screenHeight = 320;
+static const uint32_t screenWidth  = 128;
+static const uint32_t screenHeight = 160;
 
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf[ screenWidth * 10 ];
@@ -70,7 +70,6 @@ void setup()
    Serial.println( "I am LVGL_Arduino" );
 
    lv_init();
-
 #if LV_USE_LOG != 0
    lv_log_register_print_cb( my_print ); /* register print function for debugging */
 #endif
@@ -115,7 +114,8 @@ void setup()
    */
 
    // uncomment one of these demos
-   lv_demo_widgets();            // OK
+   ui_init();
+   //lv_demo_widgets();            // OK
    //lv_demo_benchmark();          // OK
    // lv_demo_keypad_encoder();     // works, but I haven't an encoder
    // lv_demo_music();              // NOK
