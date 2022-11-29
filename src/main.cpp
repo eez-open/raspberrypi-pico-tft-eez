@@ -1,5 +1,6 @@
 #include <lvgl.h>
 #include <TFT_eSPI.h>
+
 #include "eez-project/ui.h"
 
 TFT_eSPI tft = TFT_eSPI(); /* TFT instance */
@@ -105,7 +106,7 @@ void setup()
 #if 0
    /* Create simple label */
    lv_obj_t *label = lv_label_create( lv_scr_act() );
-   lv_label_set_text( label, "Hello Arduino! (V8.0.X)" );
+   lv_label_set_text( label, "Hello Arduino! (V8.3.0)" );
    lv_obj_align( label, LV_ALIGN_CENTER, 0, 0 );
 #else
    /* Try an example from the lv_examples Arduino library
@@ -128,5 +129,6 @@ void setup()
 void loop()
 {
    lv_timer_handler(); /* let the GUI do its work */
+   ui_tick();
    delay( 5000 );
 }
