@@ -11,14 +11,14 @@ void create_screen_main() {
     lv_obj_t *obj = lv_obj_create(0);
     objects.main = obj;
     lv_obj_set_pos(obj, 0, 0);
-    lv_obj_set_size(obj, 120, 160);
+    lv_obj_set_size(obj, 128, 160);
     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
     {
         lv_obj_t *parent_obj = obj;
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
             lv_obj_set_pos(obj, 0, 0);
-            lv_obj_set_size(obj, 120, 160);
+            lv_obj_set_size(obj, 128, 160);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
             {
                 lv_obj_t *parent_obj = obj;
@@ -26,7 +26,7 @@ void create_screen_main() {
                     // eee_logo
                     lv_obj_t *obj = lv_img_create(parent_obj);
                     objects.eee_logo = obj;
-                    lv_obj_set_pos(obj, -47, 11);
+                    lv_obj_set_pos(obj, -5, 13);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_img_set_src(obj, &img_logo_eez);
                     lv_obj_add_flag(obj, LV_OBJ_FLAG_ADV_HITTEST);
@@ -34,7 +34,7 @@ void create_screen_main() {
                 }
                 {
                     lv_obj_t *obj = lv_img_create(parent_obj);
-                    lv_obj_set_pos(obj, 44, 75);
+                    lv_obj_set_pos(obj, -5, 110);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_img_set_src(obj, &img_logo_lvgl);
                     lv_obj_add_flag(obj, LV_OBJ_FLAG_ADV_HITTEST);
@@ -42,9 +42,30 @@ void create_screen_main() {
                 }
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    lv_obj_set_pos(obj, 11, -15);
+                    lv_obj_set_pos(obj, -5, -15);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "LVGL: 8.3");
+                    lv_label_set_text(obj, "EEZ Studio GUI");
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffec1010), LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, -11, 71);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Platform:RP2040");
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffec1010), LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 10, 56);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "PlatformIO");
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffec1010), LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 13, 86);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "LVGL:8.3.0");
                     lv_obj_set_style_text_color(obj, lv_color_hex(0xffec1010), LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
             }

@@ -103,25 +103,16 @@ void setup()
    indev_drv.read_cb = my_touchpad_read;
    lv_indev_drv_register( &indev_drv );
 
+   // Set to 1 if you do not see any GUI
 #if 0
    /* Create simple label */
    lv_obj_t *label = lv_label_create( lv_scr_act() );
    lv_label_set_text( label, "Hello Arduino! (V8.3.0)" );
    lv_obj_align( label, LV_ALIGN_CENTER, 0, 0 );
 #else
-   /* Try an example from the lv_examples Arduino library
-      make sure to include it as written above.
-   lv_example_btn_1();
-   */
-
-   // uncomment one of these demos
+   // EEZ GUI init
    ui_init();
-   //lv_demo_widgets();            // OK
-   //lv_demo_benchmark();          // OK
-   // lv_demo_keypad_encoder();     // works, but I haven't an encoder
-   // lv_demo_music();              // NOK
-   // lv_demo_printer();
-   //lv_demo_stress();             // seems to be OK
+
 #endif
    Serial.println( "Setup done" );
 }
