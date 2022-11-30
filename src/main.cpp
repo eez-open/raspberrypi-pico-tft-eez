@@ -1,9 +1,19 @@
+#include <Arduino.h>
+#include <FreeRTOS.h>
+#include "semphr.h"
+#include <task.h>
 #include <lvgl.h>
 #include <TFT_eSPI.h>
-
 #include "eez-project/ui.h"
 
 TFT_eSPI tft = TFT_eSPI(); /* TFT instance */
+
+static void guiTask(void *pvParameter);
+
+/* Creates a semaphore to handle concurrent call to lvgl stuff
+ * If you wish to call *any* lvgl function from other threads/tasks
+ * you should lock on the very same semaphore! */
+SemaphoreHandle_t xGuiSemaphore;
 
 /*Change to your screen resolution*/
 static const uint32_t screenWidth  = 128;
@@ -12,14 +22,18 @@ static const uint32_t screenHeight = 160;
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf[ screenWidth * 10 ];
 
-#if LV_USE_LOG != 0
-/* Serial debugging */
-void my_print( lv_log_level_t level, const char * file, uint32_t line, const char * fn_name, const char * dsc )
+void gui_task_init(void)
 {
-   Serial.printf( "%s(%s)@%d->%s\r\n", file, fn_name, line, dsc );
-   Serial.flush();
+    /* If you want to use a task to create the graphic, you NEED to create a Pinned task
+     * Otherwise there can be problem such as memory corruption and so on.
+     * NOTE: When not using Wi-Fi nor Bluetooth you can pin the guiTask to core 0 */
+    /* TODO: ！！！史前巨坑！！！优先级要改大点 */
+    xTaskCreate(guiTask, "gui", 4096 * 2, NULL, 10, NULL);
 }
-#endif
+
+/**********************
+ *   STATIC FUNCTIONS
+ **********************/
 
 /* Display flushing */
 void my_disp_flush( lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p )
@@ -64,16 +78,12 @@ void my_touchpad_read( lv_indev_drv_t * indev_driver, lv_indev_data_t * data )
   //  }
 }
 
-void setup()
+static void guiTask(void *pvParameter)
 {
-   Serial.begin( 115200 ); /* prepare for possible serial debug */
-   Serial.println( "Hello Arduino! (V8.0.X)" );
-   Serial.println( "I am LVGL_Arduino" );
+    (void)pvParameter;
+    xGuiSemaphore = xSemaphoreCreateMutex();
 
    lv_init();
-#if LV_USE_LOG != 0
-   lv_log_register_print_cb( my_print ); /* register print function for debugging */
-#endif
 
    tft.begin();          /* TFT init */
    tft.setRotation( 2 ); /* Landscape orientation, flipped */
@@ -112,14 +122,35 @@ void setup()
 #else
    // EEZ GUI init
    ui_init();
-
 #endif
-   Serial.println( "Setup done" );
+   Serial.println( "UI created" );
+
+    while (1) {
+        /* Delay 1 tick (assumes FreeRTOS tick is 10ms */
+        vTaskDelay(pdMS_TO_TICKS(1));
+
+        /* Try to take the semaphore, call lvgl related function on success */
+        if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY)) {
+            lv_task_handler();
+            ui_tick();
+            xSemaphoreGive(xGuiSemaphore);
+        }
+    }
+
+    /* A task should NEVER return */
+    vTaskDelete(NULL);
+}
+
+void setup()
+{
+   Serial.begin( 115200 ); /* prepare for possible serial debug */
+   Serial.println( "Hello RP2040! (V8.3.0)" );
+
+   gui_task_init();
 }
 
 void loop()
 {
-   lv_timer_handler(); /* let the GUI do its work */
-   ui_tick();
-   delay( 5000 );
+   lv_tick_inc(1);
+   vTaskDelay(pdMS_TO_TICKS(1));
 }
