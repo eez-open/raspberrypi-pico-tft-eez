@@ -87,7 +87,7 @@ static void guiTask(void *pvParameter)
 
    tft.begin();          /* TFT init */
    tft.setRotation( 2 ); /* Landscape orientation, flipped */
-
+   tft.initDMA();
    /*Set the touchscreen calibration data,
      the actual data for your display can be aquired using
      the Generic -> Touch_calibrate example from the TFT_eSPI library*/
@@ -127,7 +127,7 @@ static void guiTask(void *pvParameter)
 
     while (1) {
         /* Delay 1 tick (assumes FreeRTOS tick is 10ms */
-        vTaskDelay(pdMS_TO_TICKS(1));
+        vTaskDelay(pdMS_TO_TICKS(2));
 
         /* Try to take the semaphore, call lvgl related function on success */
         if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY)) {
@@ -151,6 +151,7 @@ void setup()
 
 void loop()
 {
-   lv_tick_inc(1);
-   vTaskDelay(pdMS_TO_TICKS(1));
+   lv_tick_inc(10);
+   vTaskDelay(pdMS_TO_TICKS(30));
+   //delay(100);
 }
